@@ -3,23 +3,23 @@
 title: Artist's Portfolio
 description: A gallery of images for an artist's portfolio, built with Jekyll
 
-url: "https://artists-portfolio.netlify.app"
+url: "https://noradubost.github.io"
 baseurl: ""
 
-github_username: "MichaelCurrin"
-repository: "MichaelCurrin/artists-portfolio"
+github_username: "noradubost"
+repository: "noradubost/noradubost.github.io"
 
 google_analytics_key: ""
 
 # For SEO tag.
 logo: /siteicon.png
 author:
-  name: Michael Currin
+  name: Nora Dubost
   twitter:
 social:
-  name: Artist's Portfolio
+  name: Nora's Portfolio
   links:
-    - https://github.com/MichaelCurrin/artists-portfolio
+    - https://github.com/noradubost/noradubost.github.io
 
 ### Build settings
 
