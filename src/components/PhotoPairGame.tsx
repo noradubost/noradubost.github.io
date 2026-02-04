@@ -54,15 +54,10 @@ type ValentinesProposalProps = {
 export default function PhotoPairGame({
   handleShowProposal,
 }: ValentinesProposalProps) {
-  const [images, setImages] = useState<string[]>([]);
   const [selected, setSelected] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
   const [incorrect, setIncorrect] = useState<number[]>([]);
-
-  useEffect(() => {
-    // Shuffle the images when the component mounts
-    setImages(shuffleArray([...imagePairs]));
-  }, []);
+  const [images] = useState(() => shuffleArray([...imagePairs]));
 
   const handleClick = async (index: number) => {
     if (selected.length === 2 || matched.includes(index)) return;
@@ -91,7 +86,7 @@ export default function PhotoPairGame({
   }, [matched, handleShowProposal]);
 
   return (
-    <div className="grid grid-cols-9 gap-2">
+    <div className="grid grid-cols-9 gap-1 lg:gap-2 max-w-[95vw] mx-auto place-items-center">
       {/* Image preload */}
       <div className="hidden">
         {images.map((image, i) => (
@@ -110,7 +105,7 @@ export default function PhotoPairGame({
         index !== null ? (
           <motion.div
             key={i}
-            className="w-20 h-20 relative cursor-pointer"
+            className="w-[11vh] h-[11vh] lg:w-20 lg:h-20 relative cursor-pointer"
             whileHover={{ scale: 1.1 }}
             onClick={() => handleClick(index)}
             style={{ perspective: "1000px" }} // Add perspective for 3D effect
@@ -118,7 +113,7 @@ export default function PhotoPairGame({
             {/* Back of the card */}
             {!selected.includes(index) && !matched.includes(index) && (
               <motion.div
-                className="w-full h-full bg-gray-300 rounded-md absolute"
+                className="w-full h-full bg-gray-300 rounded-sm lg:rounded-md absolute z-10"
                 initial={{ rotateY: 0 }}
                 animate={{
                   rotateY:
@@ -145,7 +140,7 @@ export default function PhotoPairGame({
                   alt={`Imagen ${index + 1}`}
                   layout="fill"
                   objectFit="cover"
-                  className="rounded-md"
+                  className="rounded-sm lg:rounded-md object-cover"
                 />
               </motion.div>
             )}
@@ -157,13 +152,13 @@ export default function PhotoPairGame({
                 animate={{ scale: [1, 1.1, 1], opacity: [1, 0, 1] }}
                 transition={{ duration: 0.5 }}
               >
-                <div className="w-full h-full bg-red-500 rounded-md"></div>
+                <div className="w-full h-full bg-red-500 rounded-sm lg:rounded-md"></div>
               </motion.div>
             )}
           </motion.div>
         ) : (
-          <div key={i} className="w-20 h-20"></div>
-        )
+          <div key={i} className="w-[11vh] h-[11vh] lg:w-20 lg:h-20" />
+        ),
       )}
     </div>
   );
