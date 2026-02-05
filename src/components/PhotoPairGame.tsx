@@ -60,21 +60,24 @@ export default function PhotoPairGame({
   const [images] = useState(() => shuffleArray([...imagePairs]));
 
   const handleClick = async (index: number) => {
-    if (selected.length === 2 || matched.includes(index)) return;
-
-    setSelected((prev) => [...prev, index]);
+    if (selected.length === 2 || matched.includes(index) || selected.includes(index)) return;
 
     if (selected.length === 1) {
       const firstIndex = selected[0];
+      setSelected((prev) => [...prev, index]);
+
       if (images[firstIndex] === images[index]) {
         setMatched((prev) => [...prev, firstIndex, index]);
+        setSelected([]);
       } else {
         await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second
 
         setIncorrect([firstIndex, index]);
         setTimeout(() => setIncorrect([]), 1000); // Clear incorrect after 1 second
+        setTimeout(() => setSelected([]), 1000);
       }
-      setTimeout(() => setSelected([]), 1000);
+    } else {
+      setSelected([index]);
     }
   };
 
@@ -94,8 +97,8 @@ export default function PhotoPairGame({
             key={i}
             src={image}
             alt={`Image ${i + 1}`}
-            layout="fill"
-            objectFit="cover"
+            fill
+            className="object-cover"
             priority
           />
         ))}
@@ -138,8 +141,7 @@ export default function PhotoPairGame({
                 <Image
                   src={images[index]}
                   alt={`Imagen ${index + 1}`}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
                   className="rounded-sm lg:rounded-md object-cover"
                 />
               </motion.div>
