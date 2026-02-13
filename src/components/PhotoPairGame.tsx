@@ -57,7 +57,14 @@ export default function PhotoPairGame({
   const [selected, setSelected] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
   const [incorrect, setIncorrect] = useState<number[]>([]);
-  const [images] = useState(() => shuffleArray([...imagePairs]));
+  const [images, setImages] = useState<string[]>(imagePairs);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Shuffle images only on client-side after hydration
+  useEffect(() => {
+    setImages(shuffleArray([...imagePairs]));
+    setIsHydrated(true);
+  }, []);
 
   const handleClick = async (index: number) => {
     if (selected.length === 2 || matched.includes(index) || selected.includes(index)) return;
@@ -88,6 +95,11 @@ export default function PhotoPairGame({
     }
   }, [matched, handleShowProposal]);
 
+  // Don't render until hydration is complete to avoid hydration mismatch
+  if (!isHydrated) {
+    return null;
+  }
+
   return (
     <div className="grid grid-cols-9 gap-1 lg:gap-2 max-w-[95vw] mx-auto place-items-center">
       {/* Image preload */}
@@ -96,7 +108,7 @@ export default function PhotoPairGame({
           <Image
             key={i}
             src={image}
-            alt={`Image ${i + 1}`}
+            alt={`Photo ${i + 1}`}
             fill
             className="object-cover"
             priority
@@ -140,7 +152,7 @@ export default function PhotoPairGame({
               >
                 <Image
                   src={images[index]}
-                  alt={`Imagen ${index + 1}`}
+                  alt={`Photo ${index + 1}`}
                   fill
                   className="rounded-sm lg:rounded-md object-cover"
                 />

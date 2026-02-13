@@ -2,17 +2,15 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Valentines: A Romantic Card Game with a Surprise Proposal",
+  title: "Pour Nora - Un jeu romantique avec une surprise",
   description:
-    "Play a unique Valentine's card game. Complete the collection to reveal a romantic proposal!",
+    "Un jeu de mémoire unique spécialement créé pour Nora. Trouve toutes les paires pour découvrir la surprise !",
   keywords: [
-    "Valentine's card game",
-    "romantic proposal game",
-    "photo card challenge",
-    "Valentine's Day surprise",
-    "couples game",
-    "valentine's day game",
-    "proposal game",
+    "jeu de Saint-Valentin",
+    "jeu romantique",
+    "surprise romantique",
+    "jeu de couple",
+    "cadeau Saint-Valentin",
   ],
 };
 
@@ -22,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <body>{children}</body>
     </html>
   );
